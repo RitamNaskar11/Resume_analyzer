@@ -7,13 +7,14 @@ def calculate_score(resume_skills, job_skills):
     if required_count == 0:
         return 0
     score = (matched_count/required_count)*100
-    return score , matched_skills , missing_skills
+    return score ,list(matched_skills) , list(missing_skills)
 
-resume_skills = ["Python"]
+resume_skills = ["Python","Pandas","SQL"]
 job_skills = ["Python","Pandas","SQL","AWS"]
 
 score , missing_skills, matched_skills = calculate_score (resume_skills,job_skills)
 print(score,missing_skills, matched_skills)
+
 
 
 
