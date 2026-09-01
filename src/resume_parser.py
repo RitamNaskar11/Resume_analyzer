@@ -15,7 +15,17 @@ print(text)
 def extract_skills(text):
     skills = [
 
-    "Python","AWS","SQL","C++","Java","HTML","Machine Language"
+    "Python",
+    "AWS",
+    "SQL",
+    "C++",
+    "Java",
+    "HTML",
+    "Machine Language",
+    "Bootstrap",
+    "JavaScript",
+    "Github",
+    "CSS"
     ]
 
     found_skills = []
@@ -24,4 +34,6 @@ def extract_skills(text):
             found_skills.append(skill)
     return found_skills
 
-print(text)
+skills = extract_skills(text)
+print(skills)
+
