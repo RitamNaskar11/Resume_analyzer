@@ -1,17 +1,13 @@
 def extract_job_skills(job_description):
     skills = [
-
     "Python",
     "AWS",
     "SQL",
     "C++",
     "Java",
-    "HTML",
-    "Machine Language",
+    "Machine Learning",
     "Bootstrap",
-    "JavaScript",
-    "Github",
-    "CSS"
+    "GitHub",
     ]
 
     required_skills= []

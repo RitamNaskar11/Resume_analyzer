@@ -1,4 +1,5 @@
 import PyPDF2
+import re
 def extract_text_from_pdf(pdf_path):
     reader  = PyPDF2.PdfReader(pdf_path)
     text = ""
@@ -20,17 +21,14 @@ def extract_skills(text):
     "SQL",
     "C++",
     "Java",
-    "HTML",
-    "Machine Language",
+    "Machine Learning",
     "Bootstrap",
-    "JavaScript",
-    "Github",
-    "CSS"
+    "GitHub",
     ]
 
     found_skills = []
     for skill in skills:
-        if skill.lower() in text.lower():
+        if re.search(r'\b' + re.escape(skill) + r'\b', text, re.IGNORECASE):
             found_skills.append(skill)
     return found_skills
 

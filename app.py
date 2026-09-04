@@ -9,3 +9,15 @@ resume_skills = extract_skills(resume_text)
 print("Resume Skills:",resume_skills)
 
 
+job_description = """We are looking for a skilled Python developer with experience
+in AWS, SQL, and JavaScript. Knowledge of HTML, CSS, and Bootstrap is a plus.
+"""
+
+job_skills=extract_job_skills(job_description)
+
+score , missing_skills, matched_skills = calculate_score (resume_skills,job_skills)
+
+print("Job Skills:",job_skills)
+print("Matched Skills:",matched_skills)
+print("Missing Skills:",missing_skills)
+print("Score:",score)
