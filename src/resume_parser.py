@@ -21,6 +21,9 @@ def extract_skills(text):
     "SQL",
     "C++",
     "Java",
+    "Django",
+    "Go",
+    "JavaScript",
     "Machine Learning",
     "Bootstrap",
     "GitHub",
@@ -32,6 +35,6 @@ def extract_skills(text):
             found_skills.append(skill)
     return found_skills
 
-skills = extract_skills(text)
-print(skills)
+# skills = extract_skills(text)
+# print(skills)
 
