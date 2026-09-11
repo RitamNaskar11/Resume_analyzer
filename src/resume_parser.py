@@ -7,32 +7,33 @@ def extract_text_from_pdf(pdf_path):
         text += page.extract_text()
     return text
 
-pdf_path = "data/resume.pdf"
+# pdf_path = "data/resume.pdf"
 
 
-text = extract_text_from_pdf(pdf_path)
-print(text)
+# text = extract_text_from_pdf(pdf_path)
+# print(text)
 
 def extract_skills(text):
-    skills = [
+    section_patterns = r'(?is)(?:skills|technical skills|core skills|technical proficiencies)(.*?)(?=\n\s*(?:experience|education|projects|certifications|achievements|declaration|work experience)\b|$)'
 
-    "Python",
-    "AWS",
-    "SQL",
-    "C++",
-    "Java",
-    "Django",
-    "Go",
-    "JavaScript",
-    "Machine Learning",
-    "Bootstrap",
-    "GitHub",
-    ]
+    match = re.search(section_patterns,text)
+
+    if not match:
+        return[]
+    
+
+    skills_text = match.group(1)
+
+    skills_text = skills_text.replace("\n"," ")
+    skills_text = re.sub(r'•', ',', skills_text)
+    
+    skills_text = re.split(r', |; +',skills_text)
+
+
 
     found_skills = []
-    for skill in skills:
-        if re.search(r'\b' + re.escape(skill) + r'\b', text, re.IGNORECASE):
-            found_skills.append(skill)
+
+            
     return found_skills
 
 # skills = extract_skills(text)

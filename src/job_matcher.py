@@ -1,10 +1,12 @@
+import re
+import PyPDF2
+
 def extract_job_skills(job_description):
     skills = [
-       "Python",
+    "Python",
     "AWS",
     "SQL",
     "C++",
-    "Java",
     "Django",
     "Go",
     "JavaScript",
@@ -16,8 +18,10 @@ def extract_job_skills(job_description):
     required_skills= []
 
     for skill in skills:
-        if skill.lower() in job_description.lower():
+        pattern = r'(?<!\w)'+ re.escape (skill) +r'(?!\w)'
+        if re.search(pattern, job_description ,re.IGNORECASE):
             required_skills.append(skill)
+
     return required_skills
 
 job_description = "We are looking for a skilled Python developer with experience in AWS, SQL, and JavaScript. Knowledge of HTML, CSS, and Bootstrap is a plus."
