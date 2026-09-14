@@ -24,14 +24,21 @@ def extract_skills(text):
 
     skills_text = match.group(1)
 
-    skills_text = skills_text.replace("\n"," ")
-    skills_text = re.sub(r'•', ',', skills_text)
+    skills_text = skills_text.replace("\n",",")
+    skills_text = re.sub(r'\u2022', ',', skills_text)
     
-    skills_text = re.split(r', |; +',skills_text)
+    skills_text = re.split(r',\s*', skills_text)
 
 
 
     found_skills = []
+
+    for skill in skills_text:
+        skill = skill.strip()
+
+        if skill:
+            found_skills.append(skill)
+
 
             
     return found_skills
