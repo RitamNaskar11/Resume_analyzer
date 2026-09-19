@@ -30,7 +30,7 @@
 
         .header h1 {
             font-size: 38px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .header p {
@@ -38,36 +38,42 @@
             color: #dbeafe;
         }
 
-        /* MAIN LAYOUT */
+        /* MAIN DASHBOARD */
         .main-container {
-            max-width: 1450px;
-            margin: 20px auto;
-            padding: 0 16px;
+            width: 100%;
+            max-width: 1600px;
+            margin: 28px auto;
+            padding: 0 28px;
         }
 
         .dashboard {
             display: grid;
-            grid-template-columns: 38% 62%;
-            gap: 18px;
+
+            /* Left form + Right content */
+            grid-template-columns:
+                minmax(350px, 0.85fr) minmax(0, 1.5fr);
+
+            gap: 24px;
             align-items: start;
         }
 
-        /* LEFT SIDE */
+        /* LEFT FORM */
         .input-panel {
+            width: 100%;
             background: white;
             border: 1px solid #e0e7ff;
             border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.07);
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
         }
 
         .input-section {
-            margin-bottom: 18px;
+            margin-bottom: 22px;
         }
 
         .input-section h2 {
             font-size: 21px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #172554;
         }
 
@@ -81,12 +87,14 @@
         }
 
         textarea {
+            display: block;
             width: 100%;
-            min-height: 190px;
+            min-height: 210px;
             padding: 15px;
             border: 1px solid #cbd5e1;
             border-radius: 12px;
             font-size: 15px;
+            font-family: Arial, sans-serif;
             resize: vertical;
             outline: none;
         }
@@ -98,7 +106,7 @@
 
         .analyze-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             border: none;
             border-radius: 12px;
             background: linear-gradient(135deg, #4f46e5, #7c3aed);
@@ -115,23 +123,112 @@
         }
 
         /* RIGHT SIDE */
+        .right-panel {
+            min-width: 0;
+            width: 100%;
+        }
+
         .results-panel {
             display: flex;
             flex-direction: column;
             gap: 20px;
+            min-width: 0;
         }
 
+        /* WELCOME UI - BEFORE UPLOAD */
+        .welcome-card {
+            width: 100%;
+            min-height: 490px;
+            background: white;
+            border: 1px solid #e0e7ff;
+            border-radius: 18px;
+            padding: 38px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome-label {
+            display: inline-block;
+            width: fit-content;
+            padding: 8px 14px;
+            margin-bottom: 20px;
+            border-radius: 30px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .welcome-card h2 {
+            font-size: 30px;
+            line-height: 1.3;
+            margin-bottom: 14px;
+            color: #172554;
+        }
+
+        .welcome-card .welcome-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #64748b;
+            max-width: 650px;
+            margin-bottom: 28px;
+        }
+
+        /* HOW IT WORKS */
+        .steps-title {
+            font-size: 18px;
+            margin-bottom: 18px;
+            color: #172554;
+        }
+
+        .feature {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            border-radius: 12px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            margin-bottom: 6px;
+            color: #172554;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .welcome-footer {
+            margin-top: 14px;
+            padding-top: 18px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #64748b;
+        }
+
+        /* RESULT CARDS */
         .card {
             background: white;
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             border: 1px solid #e5e7eb;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.07);
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+            min-width: 0;
         }
 
         .card h2 {
             font-size: 22px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
             color: #172554;
         }
 
@@ -143,7 +240,7 @@
         .score-circle {
             width: 145px;
             height: 145px;
-            margin: 15px auto;
+            margin: 18px auto;
             border-radius: 50%;
             background: #eef2ff;
             border: 10px solid #6366f1;
@@ -160,6 +257,7 @@
 
         .score-card p {
             font-size: 16px;
+            line-height: 1.6;
         }
 
         /* SKILLS */
@@ -176,6 +274,7 @@
             color: #334155;
             font-size: 14px;
             font-weight: 600;
+            overflow-wrap: anywhere;
         }
 
         .matched {
@@ -188,37 +287,72 @@
             color: #b91c1c;
         }
 
-        /* THREE SKILL CARDS */
+        /* REQUIRED / MATCHED / MISSING */
         .skill-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 20px;
+            align-items: stretch;
         }
 
-        /* AI */
+        /* AI ANALYSIS */
         .ai-card {
             background: linear-gradient(135deg, #ffffff, #faf9ff);
         }
 
         .ai-analysis {
-            background: #f8fafc;
+            background: #ffffff;
+            padding: 25px;
             border-radius: 12px;
-            padding: 20px;
-            line-height: 1.7;
+            border: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+
+        /* Individual AI section */
+        .ai-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-bottom: 18px;
+            border-left: 5px solid #6366f1;
+        }
+
+        .ai-section h3 {
+            color: #4338ca;
+            font-size: 21px;
+            font-weight: 700;
+            margin: 0 0 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        /* AI content */
+        .ai-section p {
+            color: #334155;
+            font-size: 16px;
+            line-height: 1.8;
+            margin: 0;
+            white-space: pre-line;
         }
 
         pre {
             white-space: pre-wrap;
-            word-wrap: break-word;
+            overflow-wrap: anywhere;
             font-family: Arial, sans-serif;
             font-size: 15px;
             line-height: 1.7;
         }
 
-        /* MOBILE */
-        @media (max-width: 900px) {
+        /* TABLET */
+        @media (max-width: 1100px) {
             .dashboard {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+                gap: 18px;
+            }
+
+            .welcome-card {
+                padding: 26px;
             }
 
             .skill-grid {
@@ -226,203 +360,276 @@
             }
         }
 
-        @media (max-width: 600px) {
+        /* MOBILE */
+        @media (max-width: 768px) {
             .main-container {
-                padding: 0 12px;
+                padding: 0 14px;
+                margin: 18px auto;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 22px 14px;
             }
 
             .header h1 {
                 font-size: 30px;
             }
 
+            .header p {
+                font-size: 15px;
+                line-height: 1.5;
+            }
+
             .input-panel,
             .card {
                 padding: 20px;
+            }
+
+            .welcome-card {
+                min-height: auto;
+                padding: 24px;
+            }
+
+            .welcome-card h2 {
+                font-size: 25px;
+            }
+
+            textarea {
+                min-height: 180px;
+            }
+
+            .skill-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 
-
 <body>
 
     <!-- HEADER -->
-    <div class="header">
+    <header class="header">
         <h1>AI Resume Analyzer</h1>
         <p>Analyze your resume and match it with your dream job</p>
-    </div>
+    </header>
 
-
-    <div class="main-container">
+    <main class="main-container">
 
         <div class="dashboard">
 
-            <!-- ================= LEFT SIDE ================= -->
-
+            <!-- LEFT SIDE: UPLOAD FORM -->
             <form action="/analyze" method="POST" enctype="multipart/form-data">
 
                 <div class="input-panel">
 
-                    <!-- Upload Resume -->
                     <div class="input-section">
-
                         <h2>Upload Resume</h2>
 
                         <input type="file" name="resume" accept=".pdf" required>
-
                     </div>
 
-
-                    <!-- Job Description -->
                     <div class="input-section">
-
                         <h2>Job Description</h2>
 
                         <textarea name="job_description" placeholder="Paste the job description here..."
                             required></textarea>
-
                     </div>
 
-
-                    <!-- Button -->
                     <button class="analyze-btn" type="submit">
                         Analyze Resume
                     </button>
 
                 </div>
-
             </form>
 
+            <!-- RIGHT SIDE -->
+            <div class="right-panel">
 
-            <!-- ================= RIGHT SIDE ================= -->
+                {% if score is defined %}
 
-            {% if score is defined %}
+                <!-- RESULTS: KEEPING EXISTING RESULT DESIGN -->
+                <div class="results-panel">
 
-            <div class="results-panel">
+                    <!-- SCORE -->
+                    <div class="card score-card">
 
-                <!-- SCORE -->
-                <div class="card score-card">
+                        <h2>Resume Match Score</h2>
 
-                    <h2>Resume Match Score</h2>
+                        <div class="score-circle">
+                            <span>{{ "%.1f"|format(score) }}%</span>
+                        </div>
 
-                    <div class="score-circle">
-                        <span>{{ "%.1f"|format(score) }}%</span>
+                        <p>
+                            Your resume matches
+                            <strong>{{ "%.1f"|format(score) }}%</strong>
+                            of the required skills.
+                        </p>
+
                     </div>
 
-                    <p>
-                        Your resume matches
-                        <strong>{{ "%.1f"|format(score) }}%</strong>
-                        of the required skills.
+                    <!-- RESUME SKILLS -->
+                    <div class="card">
+
+                        <h2>Resume Skills</h2>
+
+                        <div class="skills">
+                            {% for skill in resume_skills %}
+                            <span class="skill">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                    <!-- REQUIRED / MATCHED / MISSING SKILLS -->
+                    <div class="skill-grid">
+
+                        <!-- REQUIRED -->
+                        <div class="card">
+                            <h2>Required Job Skills</h2>
+
+                            <div class="skills">
+                                {% for skill in job_skills %}
+                                <span class="skill">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- MATCHED -->
+                        <div class="card">
+                            <h2>Matched Skills</h2>
+
+                            <div class="skills">
+                                {% for skill in matched_skills %}
+                                <span class="skill matched">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- MISSING -->
+                        <div class="card">
+                            <h2>Missing Skills</h2>
+
+                            <div class="skills">
+                                {% for skill in missing_skills %}
+                                <span class="skill missing">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- AI ANALYSIS -->
+                    <div class="card ai-card">
+
+                        <h2>AI Resume Analysis</h2>
+
+                        <div id="ai-analysis" class="ai-analysis">
+                            <pre id="ai-raw" style="display: none;">{{ ai_result }}</pre>
+                        </div>
+
+                        <script>
+                            const raw = document.getElementById("ai-raw").textContent.trim();
+                            const container = document.getElementById("ai-analysis");
+
+                            raw.split(/(?=^\s*(?:\d+[.)]\s*)?(?:Strengths|Weaknesses|Missing Skills|Suggestions for Improvement)\s*:?\s*$)/im)
+                                .forEach(section => {
+                                    if (!section.trim()) return;
+
+                                    const [heading, ...content] = section.trim().split("\n");
+                                    const title = heading.replace(/^\d+[.)]\s*/, "").replace(/:$/, "").trim();
+
+                                    const card = document.createElement("div");
+                                    card.className = "ai-section " + title.toLowerCase().replaceAll(" ", "-");
+
+                                    const h3 = document.createElement("h3");
+                                    h3.textContent = title;
+
+                                    const p = document.createElement("p");
+                                    p.textContent = content.join("\n").trim();
+
+                                    card.append(h3, p);
+                                    container.appendChild(card);
+                                });
+                        </script>
+
+                    </div>
+
+                </div>
+
+                {% else %}
+
+                <!-- WELCOME UI: BEFORE RESUME UPLOAD -->
+                <div class="welcome-card">
+
+                    <span class="welcome-label">
+                        Smart Resume Analysis
+                    </span>
+
+                    <h2>
+                        Welcome to AI Resume Analyzer
+                    </h2>
+
+                    <p class="welcome-description">
+                        Get a clearer picture of how your resume
+                        aligns with your dream job. Upload your
+                        resume and let AI help you identify your
+                        strengths and skill gaps.
                     </p>
 
-                </div>
+                    <h3 class="steps-title">
+                        What you can do?
+                    </h3>
 
-
-                <!-- RESUME SKILLS -->
-                <div class="card">
-
-                    <h2>Resume Skills</h2>
-
-                    <div class="skills">
-
-                        {% for skill in resume_skills %}
-
-                        <span class="skill">
-                            {{ skill }}
-                        </span>
-
-                        {% endfor %}
-
-                    </div>
-
-                </div>
-
-
-                <!-- REQUIRED / MATCHED / MISSING -->
-                <div class="skill-grid">
-
-                    <!-- Required -->
-                    <div class="card">
-
-                        <h2>Required Job Skills</h2>
-
-                        <div class="skills">
-
-                            {% for skill in job_skills %}
-
-                            <span class="skill">
-                                {{ skill }}
-                            </span>
-
-                            {% endfor %}
-
+                    <div class="feature">
+                        <div>
+                            <h3>Resume Match Score</h3>
+                            <p>
+                                Check how closely your resume
+                                matches the job requirements.
+                            </p>
                         </div>
-
                     </div>
 
-
-                    <!-- Matched -->
-                    <div class="card">
-
-                        <h2>Matched Skills</h2>
-
-                        <div class="skills">
-
-                            {% for skill in matched_skills %}
-
-                            <span class="skill matched">
-                                {{ skill }}
-                            </span>
-
-                            {% endfor %}
-
+                    <div class="feature">
+                        <div>
+                            <h3>Skill Gap Analysis</h3>
+                            <p>
+                                Discover matched skills and
+                                identify skills missing from
+                                your resume.
+                            </p>
                         </div>
-
                     </div>
 
-
-                    <!-- Missing -->
-                    <div class="card">
-
-                        <h2>Missing Skills</h2>
-
-                        <div class="skills">
-
-                            {% for skill in missing_skills %}
-
-                            <span class="skill missing">
-                                {{ skill }}
-                            </span>
-
-                            {% endfor %}
-
+                    <div class="feature">
+                        <div>
+                            <h3>AI Resume Feedback</h3>
+                            <p>
+                                Get personalized suggestions
+                                to improve your resume.
+                            </p>
                         </div>
+                    </div>
 
+                    <div class="welcome-footer">
+                        <strong>Get started:</strong>
+                        Upload a PDF resume, paste the job
+                        description, and click Analyze Resume.
                     </div>
 
                 </div>
 
-
-                <!-- AI ANALYSIS -->
-                <div class="card ai-card">
-
-                    <h2>AI Resume Analysis</h2>
-
-                    <div class="ai-analysis">
-
-                        <pre>{{ ai_result }}</pre>
-
-                    </div>
-
-                </div>
+                {% endif %}
 
             </div>
 
-            {% endif %}
-
         </div>
 
-    </div>
+    </main>
 
 </body>
 
