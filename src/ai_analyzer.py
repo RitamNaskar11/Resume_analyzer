@@ -10,54 +10,40 @@ load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-
 def analyze_resume(resume_text, job_description, matched_skills, missing_skills):
     prompt = f"""
-    Analyze this resume against the given job description.
-    
-    Resume:{resume_text}
-    Job Descrption:{job_description}
-    Matched Skills:{matched_skills}
-    Missing Skills:{missing_skills}
+    Analyze this resume against the job description and provide a detailed analysis of the candidate's strengths, weaknesses, and areas for improvement.
+    Job Description: {job_description}
 
-    Compare the resume with the job description carefully.
 
-Tell me:
+Resume: {resume_text}
+Missing Skills:{missing_skills}
+Matched Skills:{matched_skills}
 
-1. Strengths
-- Explain what is strong in the resume and relevant to the job.
-
-2. Weaknesses
-- Explain weaknesses or gaps in the resume specifically for this job.
-
-3. Missing Skills
-- The program has already identified these missing skills:{missing_skills}
-- Analyze ONLY these missing skills.
-
+Give the analysis in the following sections:
+1.Strengths
+2.Weaknesses
+3.Missing Skills:{missing_skills}
 - Explain why each missing skill is important for this job.
-
-- Do not add any other skills.
-
-- If the list is empty, say "No required skills are missing." 
-
-- List ONLY the skills or requirements mentioned in the Job Description , that are missing from the Resume.
-
-- Do NOT suggest additional skills that are not required by the Job Description.
-
-- If all required skills are present in the Resume, write:"No required skills are missing."
-
-4. Suggestions for Improvement
-- Give suggestions specifically for improving the resume for this job.
+- If the list is empty, say "No required skills are missing."
+4.Suggestions areas for improvement
 
 IMPORTANT:
 The Missing Skills section must be based ONLY on the Job Description.
-Do not add general or unrelated skills.
-Return the analysis in plain text only.
-Do NOT use Markdown.
 Do NOT use #, *, **, ---, or other Markdown symbols.
+Return your analysis in plain text only.
+
 
 """
+
     response = client.chat.completions.create(
-        model="openai/gpt-oss-20b", messages=[{"role": "user", "content": prompt}]
+        model="openai/gpt-oss-20b", 
+        messages=[
+            {
+            "role": "user", 
+            "content": prompt
+            }
+        ]
     )
+
     return response.choices[0].message.content

@@ -122,6 +122,78 @@
             opacity: 0.95;
         }
 
+        /* SCANNING SCREEN */
+        .scanning-screen {
+            display: none;
+            min-height: 490px;
+            background: white;
+            border: 1px solid #e0e7ff;
+            border-radius: 18px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .scanner {
+            width: 80%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 30px auto;
+        }
+
+        .scanner-line {
+            width: 30%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    #4f46e5,
+                    #8b5cf6,
+                    #6366f1);
+            border-radius: 10px;
+            animation: scan 1.3s infinite ease-in-out;
+        }
+
+        @keyframes scan {
+
+            0% {
+                transform: translateX(-150%);
+            }
+
+            50% {
+                transform: translateX(250%);
+            }
+
+            100% {
+                transform: translateX(450%);
+            }
+
+        }
+
+        .scanner-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.15);
+                opacity: 0.6;
+            }
+        }
+
         /* RIGHT SIDE */
         .right-panel {
             min-width: 0;
@@ -414,7 +486,7 @@
     <!-- HEADER -->
     <header class="header">
         <h1>AI Resume Analyzer</h1>
-        <p>Analyze your resume and match it with your dream job</p>
+        <p>Analyze your resume with AI and get personalized feedback</p>
     </header>
 
     <main class="main-container">
@@ -422,7 +494,7 @@
         <div class="dashboard">
 
             <!-- LEFT SIDE: UPLOAD FORM -->
-            <form action="/analyze" method="POST" enctype="multipart/form-data">
+            <form id="analyze-form" action="/analyze" method="POST" enctype="multipart/form-data">
 
                 <div class="input-panel">
 
@@ -446,8 +518,28 @@
                 </div>
             </form>
 
+
+
             <!-- RIGHT SIDE -->
             <div class="right-panel">
+                <!-- SCANNING SCREEN -->
+                <div id="scanning-screen" class="scanning-screen">
+
+                    <div class="scanner-icon">📄</div>
+
+                    <h2>Scanning Your Resume</h2>
+
+                    <p>Analyzing your resume and matching it with the job description...</p>
+
+                    <div class="scanner">
+                        <div class="scanner-line"></div>
+                    </div>
+
+                    <div class="scan-status">
+                        <span id="scan-text">Reading resume...</span>
+                    </div>
+
+                </div>
 
                 {% if score is defined %}
 
@@ -631,6 +723,27 @@
 
     </main>
 
+    <script>
+
+        const form = document.getElementById("analyze-form");
+        const scanningScreen = document.getElementById("scanning-screen");
+
+        form.addEventListener("submit", function () {
+
+            // Hide welcome
+            const welcome = document.querySelector(".welcome-card");
+
+            if (welcome) {
+                welcome.style.display = "none";
+            }
+
+            // Show scanning
+            scanningScreen.style.display = "flex";
+
+        });
+
+
+    </script>
 </body>
 
 </html>
