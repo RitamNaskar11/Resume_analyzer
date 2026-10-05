@@ -194,6 +194,24 @@
             }
         }
 
+        .resume-preview-card {
+            margin-top: 0px;
+        }
+
+        .resume-preview {
+            width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+
+        .resume-preview iframe {
+            display: block;
+            width: 100%;
+            border: none;
+        }
+
         /* RIGHT SIDE */
         .right-panel {
             min-width: 0;
@@ -545,7 +563,22 @@
 
                 <!-- RESULTS: KEEPING EXISTING RESULT DESIGN -->
                 <div class="results-panel">
+                    <!-- RESUME PREVIEW -->
+                    <div class="card resume-preview-card">
 
+                        <h2>Resume Preview</h2>
+
+                        <div class="resume-preview">
+                            <!-- Change 'uploaded_file' to 'upload_file' -->
+                            <iframe src="{{ url_for('upload_file', filename=uploaded_filename) }}"
+                                width="100%"
+                                height="400px">
+                                
+                            </iframe>
+
+                        </div>
+
+                    </div>
                     <!-- SCORE -->
                     <div class="card score-card">
 
