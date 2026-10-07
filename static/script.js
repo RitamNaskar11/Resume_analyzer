@@ -46,6 +46,6 @@ form.addEventListener("submit", function (event) {
 setTimeout(function(){
     form.submit();
 
-},2500);
+},5000);
 
 });

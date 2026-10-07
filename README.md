@@ -9,10 +9,23 @@ Built with **Flask** and powered by the **Groq** API.
 
 ---
 
+## Preview
+
+**Welcome screen**
+
+![AI Resume Analyzer — welcome screen](screenshots/website.png)
+
+**Analysis results (match score, skill-gap analysis & AI feedback, with resume preview)**
+
+![AI Resume Analyzer — analysis results](screenshots/dashboard.png)
+
+---
+
 ## Features
 
 - **Resume Match Score** – See how closely your resume matches the job requirements with a percentage score.
 - **Skill Gap Analysis** – Automatically detects the skills present in your resume and highlights the ones missing for the role.
+- **Resume Preview** – View your uploaded PDF right inside the dashboard, next to your results.
 - **AI Resume Feedback** – Get a structured, plain-text analysis with Strengths, Weaknesses, Missing Skills (with reasoning), and Suggestions for Improvement.
 - **Clean Dashboard UI** – A responsive single-page dashboard with an animated "scanning" state while the analysis runs.
 
@@ -50,7 +63,7 @@ Render results on the dashboard      (templates/index.html)
 ```
 Resume_analyzer/
 ├── app.py                     # Flask entry point and routes
-├── requirement.txt            # Python dependencies
+├── requirements.txt           # Python dependencies
 ├── .env                       # GROQ_API_KEY (not committed)
 ├── .gitignore
 ├── README.md
@@ -62,21 +75,28 @@ Resume_analyzer/
 │   ├── scoring.py             # Computes match score, matched & missing skills
 │   └── ai_analyzer.py         # Groq LLM powered resume analysis
 ├── templates/
-│   └── index.html             # Dashboard UI (HTML + CSS + JS)
-└── uploads/                   # Uploaded resumes are stored here
+│   └── index.html             # Dashboard UI (Jinja2 template)
+├── static/
+│   ├── style.css              # Dashboard styling
+│   └── script.js              # Scanning animation + AI result formatting
+├── screenshots/
+│   ├── website.png            # Welcome screen screenshot (README)
+│   └── dashboard.png          # Analysis results screenshot (README)
+└── uploads/                   # Uploaded resumes are stored here (git-ignored)
 ```
 
 ---
 
 ## Tech Stack
 
-| Layer        | Technology                       |
-| ------------ | -------------------------------- |
-| Backend      | Flask                            |
-| PDF Parsing  | PyPDF2                           |
-| AI / LLM     | Groq API (`openai/gpt-oss-20b`)  |
-| Config       | python-dotenv                    |
-| Frontend     | HTML, CSS, JavaScript (Jinja2)   |
+| Layer         | Technology                       |
+| ------------- | -------------------------------- |
+| Backend       | Flask (+ Werkzeug)               |
+| PDF Parsing   | PyPDF2                           |
+| AI / LLM      | Groq API (`openai/gpt-oss-20b`)  |
+| Config        | python-dotenv                    |
+| Frontend      | HTML, CSS, JavaScript (Jinja2)   |
+| Server        | Gunicorn (WSGI, for deployment)  |
 
 ---
 
@@ -84,7 +104,7 @@ Resume_analyzer/
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.11+ (the pinned `pandas==3.0.5` requires Python ≥ 3.11; `Flask==3.1.2` requires ≥ 3.9)
 - A Groq API key (get one free at <https://console.groq.com/keys>)
 
 ### 1. Clone the repository
@@ -112,17 +132,23 @@ source venv/bin/activate
 
 ### 3. Install dependencies
 
-If `requirement.txt` is empty, install the packages directly:
+Install everything from `requirements.txt`:
 
 ```bash
-pip install flask pypdf2 python-dotenv groq matplotlib
+pip install -r requirements.txt
 ```
 
-Or, once the requirements file is populated:
+The file pins the following packages:
 
-```bash
-pip install -r requirement.txt
-```
+| Package        | Version | Purpose                          |
+| -------------- | ------- | -------------------------------- |
+| Flask          | 3.1.2   | Web framework and routing        |
+| PyPDF2         | 3.0.1   | PDF text extraction              |
+| groq           | 1.7.0   | Groq API client for the LLM      |
+| python-dotenv  | 1.2.3   | Loads `GROQ_API_KEY` from `.env` |
+| gunicorn       | 26.2.0  | Production WSGI server           |
+| pandas         | 3.0.5   | Data utilities                   |
+| matplotlib     | 3.11.1  | Plotting library                 |
 
 ### 4. Configure the API key
 
@@ -146,6 +172,17 @@ Then open your browser at:
 http://127.0.0.1:5000
 ```
 
+### 6. Deploy (optional)
+
+`requirements.txt` includes **Gunicorn**, so the app can also run behind a WSGI
+server on a host such as Render:
+
+```bash
+gunicorn app:app
+```
+
+Set the `GROQ_API_KEY` environment variable in your hosting provider's dashboard.
+
 ---
 
 ## Usage
@@ -154,6 +191,7 @@ http://127.0.0.1:5000
 2. Paste the **job description** into the text area.
 3. Click **Analyze Resume**.
 4. Review the results on the dashboard:
+   - **Resume Preview** — your uploaded PDF, embedded in the page.
    - **Match Score** (%)
    - **Resume Skills** / **Required (Job) Skills**
    - **Matched Skills** and **Missing Skills**
@@ -163,10 +201,11 @@ http://127.0.0.1:5000
 
 ## API Routes
 
-| Method | Route      | Description                                              |
-| ------ | ---------- | -------------------------------------------------------- |
-| GET    | `/`        | Renders the dashboard (with results if an analysis exists) |
-| POST   | `/analyze` | Accepts the resume + job description and runs the analysis |
+| Method | Route                 | Description                                                   |
+| ------ | --------------------- | ------------------------------------------------------------- |
+| GET    | `/`                   | Renders the dashboard (with results if an analysis exists)    |
+| POST   | `/analyze`            | Accepts the resume + job description and runs the analysis     |
+| GET    | `/uploads/<filename>` | Serves an uploaded resume file (used for the in-page preview)  |
 
 ---
 
@@ -174,7 +213,7 @@ http://127.0.0.1:5000
 
 - Resumes must be in **PDF** format and contain an extractable text layer (scanned/image-only PDFs will not work without OCR).
 - Resume skill extraction relies on a dedicated **"Skills"** section in the resume; resumes without such a heading may return few or no skills.
-- Job skill extraction matches against a **predefined keyword list** in `src/job_matcher.py`. Extend this list to support more technologies.
+- Job skill extraction matches against a **predefined keyword list** in `src/job_matcher.py` — currently: Python, AWS, SQL, C++, Django, Go, JavaScript, Machine Learning, Bootstrap, and GitHub. Extend this list to support more technologies.
 - The AI analysis requires a valid `GROQ_API_KEY`; the rest of the pipeline works without it.
 
 ---
