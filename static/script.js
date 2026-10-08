@@ -25,53 +25,27 @@ if (rawElement && container){
     });
 }
 
-// Handle form submission
+// Handle form submission to show scanning screen
 const form = document.getElementById("analyze-form");
 const scanningScreen = document.getElementById("scanning-screen");
 
-if (form) {
-    form.addEventListener("submit", async function (event) {
-        event.preventDefault();
+form.addEventListener("submit", function (event) {
+// stop the form from submitting immediately
+    event.preventDefault(); 
 
-        // Hide welcome screen
-        const welcome = document.querySelector(".welcome-card");
+    // Hide welcome
+    const welcome = document.querySelector(".welcome-card");
 
-        if (welcome) {
-            welcome.style.display = "none";
-        }
+    if (welcome) {
+        welcome.style.display = "none";
+    }
 
-        // Show scanning screen
-        if (scanningScreen) {
-            scanningScreen.style.display = "flex";
-        }
+    // Show scanning
+    scanningScreen.style.display = "flex";
 
-        try {
-            // Keep the uploaded PDF in FormData
-            const formData = new FormData(form);
+setTimeout(function(){
+    form.submit();
 
-            // Send the form using fetch
-            const response = await fetch(form.action || window.location.href, {
-                method: "POST",
-                body: formData,
-                credentials: "same-origin"
-            });
+},5000);
 
-            // Get the result page
-            const html = await response.text();
-
-            // Replace current page with the result
-            document.open();
-            document.write(html);
-            document.close();
-
-        } catch (error) {
-            console.error("Upload error:", error);
-
-            if (scanningScreen) {
-                scanningScreen.style.display = "none";
-            }
-
-            alert("Something went wrong while uploading the resume. Please try again.");
-        }
-    });
-}
+});
