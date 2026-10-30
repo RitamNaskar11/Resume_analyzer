@@ -1,19 +1,84 @@
-from flask import  Flask, render_template, request, session, send_from_directory
+from flask import (
+    Flask, render_template, request,redirect, url_for, session,
+send_from_directory, flash
+)
 
-from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.utils import secure_filename
-import os
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from src.resume_parser import extract_text_from_pdf, extract_skills
 from src.job_matcher import extract_job_skills
 from src.scoring import calculate_score
 from src.ai_analyzer import analyze_resume
 
+from models import db, User
+
+
+import os
+
+
+
+
 
 app = Flask(__name__)
-app.secret_key = "resume-analyzer-secret-key"
+
+app.secret_key = os.environ.get(
+    "SECRET_KEY", "dev-secret-key"
+)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
+    "DATABASE_URL", ""
+).replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+db.init_app(app)
+
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# signup page function
+@app.route("/signup", methods = ["GET" , "POST"])
+def signup():
+    if request.method == "POST":
+        name = request.form.get("name","").strip()
+        email = request.form.get("email","").strip().lower()
+        password = request.form.get("password","")
+        confirm_password = request.form.get("confirm_password","")
+
+        if not name or not email or not password:
+            flash("All field are required.", "error")
+            return redirect(url_for("signup"))
+
+        if password != confirm_password:
+            flash("Password do not match", "error")
+            return redirect(url_for("signup"))
+
+        if len(password)<8:
+            flash("Password must contain at least 8 characters", "error")
+            return redirect(url_for("signup"))
+
+        existing_user = User.query.filter_by(email=email).first()
+
+        if existing_user:
+            flash("Email alrady registered please login", "error")
+            return redirect(url_for("signup"))
+
+        hash_password = generate_password_hash(password)
+
+        new_user = User (
+            name = name,
+            email=email,
+            password = hash_password
+        )
+
+        db.session.add (new_user)
+        db.session.commit()
+
+        flash("Account crated successfully! please login your account" , "success")
+        return redirect(url_for("login"))
+
+    return render_template("signup.html")
 
 @app.route("/")
 def home():
