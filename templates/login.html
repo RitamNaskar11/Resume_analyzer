@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+
+            <div class="login-form">
+                <h2>Welcome Back</h2>
+                <p>Welcome Back! Please enter your details.</p>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endwith %}
+
+                <form action="{{ url_for('login') }}" method="POST">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="myemail@address.com" required>
+
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter password" required>
+
+                    <button type="submit">Sign in</button>
+                </form>
+
+                <div class="google-btn">Sign in with Google</div>
+
+                <p class="switch">
+                    You don't have an account?
+                    <a href="{{ url_for('signup') }}">Sign up</a>
+                </p>
+            </div>
+
+            <div class="auth-art">
+                <div class="circle one"></div>
+                <div class="circle two"></div>
+                <div class="circle three"></div>
+                <h1>Resume Analyzer</h1>
+                <p>Build your career with confidence.</p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeAI - Get Hired Faster</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='landing.css') }}">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="{{ url_for('landing') }}" class="logo">
+        <span>✳</span> ResumeAI
+    </a>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it Works</a>
+        
+    </nav>
+
+    <div class="nav-buttons">
+        <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+        <a href="{{ url_for('signup') }}" class="get-started">Get Started</a>
+    </div>
+</header>
+
+<main>
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+            <span class="tag">✦ AI Powered Resume Analyzer</span>
+
+            <h1>
+                Get Hired Faster<br>
+                With <span>AI-Powered</span><br>
+                Resume Analysis
+            </h1>
+
+            <p>
+                Upload your resume, add a job description, and get
+                detailed insights to improve your chances of landing
+                your dream job.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="{{ url_for('signup') }}" class="primary-btn">
+                    Get Started for Free →
+                </a>
+
+                <a href="#how-it-works" class="secondary-btn">
+                    ▶ Watch Demo
+                </a>
+            </div>
+
+            <!-- <div class="stats">
+                <div>
+                    <strong>10K+</strong>
+                    <small>Resumes Analyzed</small>
+                </div>
+                <div>
+                    <strong>95%</strong>
+                    <small>Success Rate</small>
+                </div>
+                <div>
+                    <strong>4.8/5</strong>
+                    <small>User Rating</small>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="hero-visual">
+            <div class="glow-circle"></div>
+
+            <div class="resume-card">
+                <div class="resume-top">
+                    <div class="profile-icon">👤</div>
+                    <div>
+                        <strong>John Doe</strong>
+                        <small>Software Engineer</small>
+                    </div>
+                    <div class="score">85%<small>Match</small></div>
+                </div>
+
+                <div class="resume-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div class="result-item success">✓ Skills Match</div>
+                <div class="result-item danger">! Missing Skills</div>
+                <div class="result-item suggestion">✦ Suggestions</div>
+
+                <div class="resume-lines bottom-lines">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="floating-star">✦</div>
+            <div class="floating-check">✓</div>
+        </div>
+
+    </section>
+
+    <section class="features section" id="features">
+        <span class="section-tag">OUR FEATURES</span>
+        <h2>Everything you need to improve your resume</h2>
+
+        <div class="feature-grid">
+            <article class="feature-card">
+                <div class="feature-icon">📄</div>
+                <h3>Resume Analysis</h3>
+                <p>Upload your PDF resume and extract important skills automatically.</p>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Job Matching</h3>
+                <p>Compare your resume skills with the target job description.</p>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon">✦</div>
+                <h3>AI Insights</h3>
+                <p>Get personalized strengths, weaknesses and improvement suggestions.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="how section" id="how-it-works">
+        <span class="section-tag">SIMPLE PROCESS</span>
+        <h2>How it works</h2>
+
+        <div class="steps">
+            <div><b>01</b><h3>Upload Resume</h3><p>Choose your current PDF resume.</p></div>
+            <div><b>02</b><h3>Add Job Description</h3><p>Paste the job description you want to target.</p></div>
+            <div><b>03</b><h3>Get Your Results</h3><p>Review your match score and personalized feedback.</p></div>
+        </div>
+    </section>
+
+    <section class="pricing section" id="pricing">
+        <span class="section-tag">GET STARTED</span>
+        <h2>Ready to improve your resume?</h2>
+        <p>Take the next step towards your dream career.</p>
+        <a href="{{ url_for('signup') }}" class="primary-btn">Get Started for Free →</a>
+    </section>
+</main>
+
+<footer>
+    © 2026 ResumeAI. Built to help you move forward.
+</footer>
+
+</body>
+</html>

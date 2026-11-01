@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-card signup-card">
+
+            <div class="auth-art">
+                <div class="circle one"></div>
+                <div class="circle two"></div>
+                <div class="circle three"></div>
+                <h1>Resume Analyzer</h1>
+                <p>Your next opportunity starts here.</p>
+            </div>
+
+            <div class="login-form">
+                <h2>Create an account</h2>
+                <p>Enter your details to get started.</p>
+                
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endwith %}
+
+                <form action="{{ url_for('signup') }}" method="POST">
+                    <label>Full Name</label>
+                    <input type="text" name="name" placeholder="Your name" required>
+
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="you@example.com" required>
+
+                    <label>Set a password</label>
+                    <input type="password" name="password" placeholder="Create password" required>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password"
+                            placeholder="Confirm password" required>
+                    </div>
+
+                    <button type="submit">Create account</button>
+                </form>
+
+                <p class="switch">
+                    Already have an account?
+                    <a href="{{ url_for('login') }}">Log in</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

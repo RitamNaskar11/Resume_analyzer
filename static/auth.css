@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #edc7ff, #f8d9f7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.auth-wrapper {
+    width: 100%;
+    max-width: 900px;
+}
+
+.auth-card {
+    min-height: 600px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 45px rgba(80, 30, 120, 0.15);
+}
+
+.login-form {
+    padding: 70px 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-form h2 {
+    color: #8545d4;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.login-form p {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 28px;
+}
+
+.login-form label {
+    font-size: 13px;
+    margin: 12px 0 7px;
+    color: #222;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    outline: none;
+}
+
+.login-form input:focus {
+    border-color: #9748d8;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    font-weight: bold;
+    background: linear-gradient(90deg, #d64ecb, #8852d9);
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    opacity: 0.9;
+}
+
+.switch {
+    text-align: center;
+    margin-top: 22px;
+}
+
+.switch a {
+    color: #bd35bc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.google-btn {
+    text-align: center;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    margin-top: 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.auth-art {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(140deg, #e55ccf, #8150d2 65%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+.auth-art h1 {
+    position: relative;
+    z-index: 2;
+    font-size: 32px;
+}
+
+.auth-art p {
+    position: relative;
+    z-index: 2;
+    margin-top: 12px;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+}
+
+.one {
+    width: 350px;
+    height: 350px;
+    top: -100px;
+    right: -100px;
+}
+
+.two {
+    width: 280px;
+    height: 280px;
+    bottom: -100px;
+    left: -100px;
+}
+
+.three {
+    width: 90px;
+    height: 90px;
+    bottom: 100px;
+    right: 60px;
+}
+
+@media (max-width: 650px) {
+    .auth-card {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-art {
+        min-height: 180px;
+        order: -1;
+    }
+
+    .login-form {
+        padding: 35px 25px;
+    }
+
+    .auth-art h1 {
+        font-size: 25px;
+    }
+}

@@ -12,15 +12,25 @@ from src.scoring import calculate_score
 from src.ai_analyzer import analyze_resume
 
 from models import db, User
-
-
 import os
+
+from functools import wraps
 
 
 
 
 
 app = Flask(__name__)
+
+def login_required(route_function):
+    @wraps(route_function)
+
+    def wrapper(*args, **kwargs):
+        if "user_id" not in session:
+            flash("Please login first.", "error")
+            return redirect(url_for("login"))
+        return route_function(*args, **kwargs)
+    return wrapper
 
 app.secret_key = os.environ.get(
     "SECRET_KEY", "dev-secret-key"
@@ -33,7 +43,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
-
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -80,8 +89,48 @@ def signup():
 
     return render_template("signup.html")
 
+# login page function
+@app.route("/login",methods = ["POST","GET"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email","").strip().lower()
+        password = request.form.get("password","")
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and check_password_hash (user.password, password):
+
+            session.clear()
+            session["user_id"] = user.id
+            session["user_name"] = user.name
+
+            return redirect(url_for("home"))
+        
+        flash("Invalid email or password", "error")
+        return redirect(url_for("login"))
+
+    return render_template("login.html")
+
+# logout function 
+@app.route("/logout")
+def logout():
+    session.clear()
+
+    flash("You have been loged out","success")
+    return redirect(url_for("landing"))
+
 @app.route("/")
+def landing():
+    return render_template("landing.html")
+
+@app.route("/dashboard")
+@login_required
 def home():
+    return render_template("dashboard.html")
+
+
+@app.route("/analyzer")
+def analyzer():
     analysis = session.pop("analysis", None)
 
     if analysis:
@@ -95,15 +144,18 @@ def home():
             uploaded_filename=analysis["uploaded_filename"]
 
         )
-
     return render_template("index.html")
 
+
+
 @app.route("/uploads/<filename>")
+@login_required
 def upload_file(filename):
     return send_from_directory("uploads",filename)
     
 
 @app.route("/analyze", methods=["POST"])
+@login_required
 def analyze():
     # 1. Resume receive karo
     resume = request.files["resume"]
@@ -132,8 +184,6 @@ def analyze():
     ai_result = analyze_resume(
         resume_text, job_description, matched_skills, missing_skills
     )
-
-
     session ["analysis"] = {
     "resume_skills": resume_skills,
     "job_skills": job_skills,
@@ -143,10 +193,14 @@ def analyze():
     "ai_result": ai_result,
     "uploaded_filename": filename
     }
-    return redirect(url_for("home"))
+    return redirect(url_for("analyzer"))
 
 
 if __name__ == "__main__":
+
+    with app.app_context():
+        db.create_all()
+        print("PostgreSQL database connected successfully!")
     app.run(debug=True)
 
 

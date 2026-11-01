@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,24 @@
   <title>Resume Analyzer | Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
       <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">✳</span><span>resumely</span></a>
       <div class="workspace-label">WORKSPACE</div>
       <nav class="side-nav" aria-label="Main navigation">
-        <a class="nav-link" href="{{ url_for('home') }}"><span class="nav-icon">⌂</span> Dashboard</a>
-        <a class="nav-link active" href="#analyzer"><span class="nav-icon">✧</span> Resume Analyzer</a>
+        <a href="{{ url_for('home') }}" class="nav-link">
+          <span class="nav-icon">⌂</span> Dashboard
+        </a>
+        <a href="{{ url_for('analyzer') }}" class="nav-link active">
+          <span class="nav-icon">✧</span> Resume Analyzer
+        </a>
         <a class="nav-link" href="#job-match"><span class="nav-icon">▤</span> Job Matching</a>
         <a class="nav-link" href="#insights"><span class="nav-icon">◷</span> Insights</a>
       </nav>
@@ -41,16 +49,26 @@
         </div>
         <div class="topbar-actions">
           <span class="status-pill"><i></i> AI analysis ready</span>
-          <div class="avatar" aria-label="Profile">R</div>
+
+          <div class="avatar">
+            {{ session.get('user_name', 'R')[0]|upper }}
+          </div>
+
+          <a href="{{ url_for('logout') }}" class="logout-button">
+            Logout
+          </a>
+
         </div>
       </header>
 
       <section class="page-content" id="analyzer">
-        <div class="welcome-row">
+        <div class="welcome-row" id="dashboard">
           <div>
             <p class="eyebrow purple">YOUR CAREER, CLEARER</p>
             <h2>{% if score is defined %}Your analysis overview{% else %}Make your resume work harder.{% endif %}</h2>
-            <p class="subheading">{% if score is defined %}Here's how your resume aligns with the job description you provided.{% else %}Compare your resume with a target role and discover where you can improve.{% endif %}</p>
+            <p class="subheading">{% if score is defined %}Here's how your resume aligns with the job description you
+              provided.{% else %}Compare your resume with a target role and discover where you can improve.{% endif %}
+            </p>
           </div>
           <button class="primary-button" type="button" data-open-modal><span>+</span> Analyze resume</button>
         </div>
@@ -69,7 +87,7 @@
             <div class="stat-caption">Skills found in your resume</div>
           </article>
           <article class="stat-card">
-            <div class="stat-top"><span>Missing skills</span><span class="stat-icon orange-icon">＋</span></div>
+            <div class="stat-top"><span>Missing skills</span><span class="stat-icon orange-icon">+</span></div>
             <div class="stat-value">{{ missing_skills|length }}</div>
             <div class="stat-caption">Skills to consider developing</div>
           </article>
@@ -82,43 +100,122 @@
 
         <div class="content-grid">
           <article class="panel score-panel">
-            <div class="panel-heading"><div><p class="eyebrow">PERFORMANCE</p><h3>Resume compatibility</h3></div><span class="pill">ATS overview</span></div>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">PERFORMANCE</p>
+                <h3>Resume compatibility</h3>
+              </div><span class="pill">ATS overview</span>
+            </div>
             <div class="score-layout">
-              <div class="score-ring" style="--score: {{ score }};"><div><strong>{{ "%.1f"|format(score) }}%</strong><span>match score</span></div></div>
-              <div class="score-copy"><h4>{% if score >= 75 %}Great alignment!{% elif score >= 45 %}Good starting point{% else %}Room to improve{% endif %}</h4><p>Your resume matches {{ matched_skills|length }} out of {{ job_skills|length }} identified job skills. Use the skill breakdown below to focus your next edits.</p></div>
+              <div class="score-ring" style="--score: {{ score }};">
+                <div><strong>{{ "%.1f"|format(score) }}%</strong><span>match score</span></div>
+              </div>
+              <div class="score-copy">
+                <h4>{% if score >= 75 %}Great alignment!{% elif score >= 45 %}Good starting point{% else %}Room to
+                  improve{% endif %}</h4>
+                <p>Your resume matches {{ matched_skills|length }} out of {{ job_skills|length }} identified job skills.
+                  Use the skill breakdown below to focus your next edits.</p>
+              </div>
             </div>
           </article>
           <article class="panel resume-panel">
-            <div class="panel-heading"><div><p class="eyebrow">UPLOADED FILE</p><h3>Resume preview</h3></div><span class="file-type">PDF</span></div>
-            <div class="file-row"><div class="pdf-icon">PDF</div><div class="file-info"><strong>{{ uploaded_filename }}</strong><span>Successfully analyzed</span></div><a class="text-link" href="{{ url_for('upload_file', filename=uploaded_filename) }}" target="_blank" rel="noopener">Open ↗</a></div>
-            <div class="resume-note">Your uploaded document was used for this analysis. Review the feedback before making changes to your original file.</div>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">UPLOADED FILE</p>
+                <h3>Resume preview</h3>
+              </div><span class="file-type">PDF</span>
+            </div>
+            <div class="file-row">
+              <div class="pdf-icon">PDF</div>
+              <div class="file-info"><strong>{{ uploaded_filename }}</strong><span>Successfully analyzed</span></div><a
+                class="text-link" href="{{ url_for('upload_file', filename=uploaded_filename) }}" target="_blank"
+                rel="noopener">Open ↗</a>
+            </div>
+            <div class="resume-note">Your uploaded document was used for this analysis. Review the feedback before
+              making changes to your original file.</div>
           </article>
         </div>
 
         <section class="panel skills-panel" id="job-match">
-          <div class="panel-heading"><div><p class="eyebrow">SKILL BREAKDOWN</p><h3>Understand your skill match</h3></div><span class="pill">{{ job_skills|length }} required skills</span></div>
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">SKILL BREAKDOWN</p>
+              <h3>Understand your skill match</h3>
+            </div><span class="pill">{{ job_skills|length }} required skills</span>
+          </div>
           <div class="skill-columns">
-            <div class="skill-group"><div class="skill-heading"><span class="dot green-dot"></span><h4>Matched skills</h4><b>{{ matched_skills|length }}</b></div><div class="chip-list">{% for skill in matched_skills %}<span class="chip matched">{{ skill }}</span>{% else %}<p class="empty-state">No matching skills found yet.</p>{% endfor %}</div></div>
-            <div class="skill-group"><div class="skill-heading"><span class="dot red-dot"></span><h4>Missing skills</h4><b>{{ missing_skills|length }}</b></div><div class="chip-list">{% for skill in missing_skills %}<span class="chip missing">{{ skill }}</span>{% else %}<p class="empty-state">No missing skills identified.</p>{% endfor %}</div></div>
-            <div class="skill-group"><div class="skill-heading"><span class="dot blue-dot"></span><h4>Skills in your resume</h4><b>{{ resume_skills|length }}</b></div><div class="chip-list">{% for skill in resume_skills %}<span class="chip">{{ skill }}</span>{% else %}<p class="empty-state">No skills extracted from the resume.</p>{% endfor %}</div></div>
+            <div class="skill-group">
+              <div class="skill-heading"><span class="dot green-dot"></span>
+                <h4>Matched skills</h4><b>{{ matched_skills|length }}</b>
+              </div>
+              <div class="chip-list">{% for skill in matched_skills %}<span class="chip matched">{{ skill }}</span>{%
+                else %}<p class="empty-state">No matching skills found yet.</p>{% endfor %}</div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-heading"><span class="dot red-dot"></span>
+                <h4>Missing skills</h4><b>{{ missing_skills|length }}</b>
+              </div>
+              <div class="chip-list">{% for skill in missing_skills %}<span class="chip missing">{{ skill }}</span>{%
+                else %}<p class="empty-state">No missing skills identified.</p>{% endfor %}</div>
+            </div>
+            <div class="skill-group">
+              <div class="skill-heading"><span class="dot blue-dot"></span>
+                <h4>Skills in your resume</h4><b>{{ resume_skills|length }}</b>
+              </div>
+              <div class="chip-list">{% for skill in resume_skills %}<span class="chip">{{ skill }}</span>{% else %}<p
+                  class="empty-state">No skills extracted from the resume.</p>{% endfor %}</div>
+            </div>
           </div>
         </section>
 
         <section class="panel ai-panel" id="insights">
-          <div class="panel-heading"><div><p class="eyebrow">PERSONALIZED FEEDBACK</p><h3>AI resume insights</h3></div><span class="ai-badge">✦ Powered by AI</span></div>
-          <div id="ai-analysis" class="ai-grid"><pre id="ai-raw" hidden>{{ ai_result }}</pre></div>
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">PERSONALIZED FEEDBACK</p>
+              <h3>AI resume insights</h3>
+            </div><span class="ai-badge">✦ Powered by AI</span>
+          </div>
+          <div id="ai-analysis" class="ai-grid">
+            <pre id="ai-raw" hidden>{{ ai_result }}</pre>
+          </div>
         </section>
         {% else %}
         <div class="empty-dashboard">
           <div class="empty-main panel">
-            <div class="empty-illustration"><div class="doc-shape"><span></span><span></span><span></span><b>✓</b></div><div class="sparkle s1">✦</div><div class="sparkle s2">✧</div></div>
-            <div class="empty-copy"><span class="pill purple-pill">SMART RESUME ANALYSIS</span><h3>Ready to see how your resume stacks up?</h3><p>Upload your resume and add a job description. We’ll calculate a skill match score and provide personalized feedback to help you take the next step.</p><button class="primary-button" type="button" data-open-modal>Start analyzing <span>→</span></button></div>
+            <div class="empty-illustration">
+              <div class="doc-shape"><span></span><span></span><span></span><b>✓</b></div>
+              <div class="sparkle s1">✦</div>
+              <div class="sparkle s2">✧</div>
+            </div>
+            <div class="empty-copy"><span class="pill purple-pill">SMART RESUME ANALYSIS</span>
+              <h3>Ready to see how your resume stacks up?</h3>
+              <p>Upload your resume and add a job description. We'll calculate a skill match score and provide
+                personalized feedback to help you take the next step.</p><button class="primary-button" type="button"
+                data-open-modal>Start analyzing <span>→</span></button>
+            </div>
           </div>
           <div class="how-panel panel">
-            <div class="panel-heading"><div><p class="eyebrow">SIMPLE PROCESS</p><h3>How it works</h3></div></div>
-            <div class="step"><span>01</span><div><strong>Upload your resume</strong><p>Choose your current PDF resume.</p></div></div>
-            <div class="step"><span>02</span><div><strong>Add a target job description</strong><p>Paste the role you want to apply for.</p></div></div>
-            <div class="step"><span>03</span><div><strong>Get your insights</strong><p>Review your match score and skill gaps.</p></div></div>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">SIMPLE PROCESS</p>
+                <h3>How it works</h3>
+              </div>
+            </div>
+            <div class="step"><span>01</span>
+              <div><strong>Upload your resume</strong>
+                <p>Choose your current PDF resume.</p>
+              </div>
+            </div>
+            <div class="step"><span>02</span>
+              <div><strong>Add a target job description</strong>
+                <p>Paste the role you want to apply for.</p>
+              </div>
+            </div>
+            <div class="step"><span>03</span>
+              <div><strong>Get your insights</strong>
+                <p>Review your match score and skill gaps.</p>
+              </div>
+            </div>
           </div>
         </div>
         {% endif %}
@@ -127,11 +224,11 @@
     </main>
   </div>
 
-  <div class="modal-backdrop {% if score is defined %}is-hidden{% endif %}" id="upload-modal" aria-hidden="{% if score is defined %}true{% else %}false{% endif %}">
+  <div class="modal-backdrop is-hidden" id="upload-modal">
     <div class="upload-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <button class="modal-close" type="button" id="modal-close" aria-label="Close upload dialog">×</button>
       <div class="modal-symbol">✧</div>
-      <p class="eyebrow purple">LET’S GET STARTED</p>
+      <p class="eyebrow purple">LET'S GET STARTED</p>
       <h2 id="modal-title">Upload your resume</h2>
       <p class="modal-intro">Get an instant skill match score and personalized feedback for your target role.</p>
       <form id="analyze-form" action="{{ url_for('analyze') }}" method="POST" enctype="multipart/form-data">
@@ -143,16 +240,20 @@
           <small class="file-limit">PDF format · Maximum 5 MB</small>
         </label>
         <label class="field-label" for="job-description">Job description</label>
-        <textarea id="job-description" name="job_description" placeholder="Paste the job description for the role you’re applying to..." required></textarea>
+        <textarea id="job-description" name="job_description"
+          placeholder="Paste the job description for the role you’re applying to..." required></textarea>
         <div class="modal-error" id="form-error" role="alert"></div>
-        <button class="primary-button modal-submit" type="submit" id="submit-button">Analyze resume <span>→</span></button>
+        <button class="primary-button modal-submit" type="submit" id="submit-button">Analyze resume
+          <span>→</span></button>
       </form>
       <div class="scanning-state" id="scanning-screen" aria-live="polite">
-        <div class="loader"></div><strong>Analyzing your resume…</strong><span>Extracting skills and preparing your feedback.</span>
+        <div class="loader"></div><strong>Analyzing your resume…</strong><span>Extracting skills and preparing your
+          feedback.</span>
       </div>
       <div class="modal-foot">Your resume is used only to generate this analysis.</div>
     </div>
   </div>
   <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </body>
+
 </html>
