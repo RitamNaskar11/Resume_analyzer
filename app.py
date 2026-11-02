@@ -99,12 +99,11 @@ def login():
         user = User.query.filter_by(email=email).first()
 
         if user and check_password_hash (user.password, password):
-
+            
             session.clear()
             session["user_id"] = user.id
             session["user_name"] = user.name
-
-            return redirect(url_for("home"))
+            return redirect(url_for("analyzer"))
         
         flash("Invalid email or password", "error")
         return redirect(url_for("login"))
@@ -123,18 +122,15 @@ def logout():
 def landing():
     return render_template("landing.html")
 
-@app.route("/dashboard")
-@login_required
-def home():
-    return render_template("dashboard.html")
-
 
 @app.route("/analyzer")
+@login_required
 def analyzer():
     analysis = session.pop("analysis", None)
 
     if analysis:
-        return render_template("index.html",
+        return render_template(
+            "index.html",
             resume_skills=analysis["resume_skills"],
             job_skills=analysis["job_skills"],
             score=analysis["score"],

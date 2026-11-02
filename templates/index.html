@@ -5,30 +5,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f7f6fb">
-  <title>Resume Analyzer | Dashboard</title>
+  <title>Resume Analyzer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
 </head>
 
 <body>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
-      <a class="brand" href="{{ url_for('home') }}"><span class="brand-mark">✳</span><span>resumely</span></a>
+      <a class="brand"><span class="brand-mark">✳</span><span>resumely</span></a>
       <div class="workspace-label">WORKSPACE</div>
-      <nav class="side-nav" aria-label="Main navigation">
-        <a href="{{ url_for('home') }}" class="nav-link">
-          <span class="nav-icon">⌂</span> Dashboard
+
+      <div class="sidebar-menu">
+    
+
+        <a href="#" class="menu-item active">
+          <i data-lucide="scan-search"></i>
+          <span>Analyze resume</span>
         </a>
-        <a href="{{ url_for('analyzer') }}" class="nav-link active">
-          <span class="nav-icon">✧</span> Resume Analyzer
+
+        <a href="#" class="menu-item">
+          <i data-lucide="history"></i>
+          <span>Analysis history</span>
         </a>
-        <a class="nav-link" href="#job-match"><span class="nav-icon">▤</span> Job Matching</a>
-        <a class="nav-link" href="#insights"><span class="nav-icon">◷</span> Insights</a>
-      </nav>
+
+        <a href="#" class="menu-item">
+          <i data-lucide="file-chart-column"></i>
+          <span>Reports</span>
+        </a>
+
+      </div>
+      <script>
+        lucide.createIcons();
+      </script>
+
       <div class="sidebar-bottom">
         <div class="upgrade-card">
           <div class="upgrade-spark">✦</div>
@@ -254,6 +270,7 @@
     </div>
   </div>
   <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  
 </body>
 
 </html>
