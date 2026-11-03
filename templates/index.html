@@ -12,6 +12,7 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
   <script src="https://unpkg.com/lucide@latest"></script>
 
 </head>
@@ -23,7 +24,7 @@
       <div class="workspace-label">WORKSPACE</div>
 
       <div class="sidebar-menu">
-    
+
 
         <a href="#" class="menu-item active">
           <i data-lucide="scan-search"></i>
@@ -50,7 +51,7 @@
           <div class="upgrade-spark">✦</div>
           <strong>Make your next move</strong>
           <p>Build a stronger resume with clear, actionable feedback.</p>
-          <button type="button" class="upgrade-button" data-open-modal>Analyze a resume <span>→</span></button>
+          <!-- <button type="button" class="upgrade-button" data-open-modal>Analyze a resume <span>→</span></button> -->
         </div>
         <div class="sidebar-foot">Made to help you move forward.</div>
       </div>
@@ -86,7 +87,6 @@
               provided.{% else %}Compare your resume with a target role and discover where you can improve.{% endif %}
             </p>
           </div>
-          <button class="primary-button" type="button" data-open-modal><span>+</span> Analyze resume</button>
         </div>
 
         {% if score is defined %}
@@ -206,8 +206,10 @@
             <div class="empty-copy"><span class="pill purple-pill">SMART RESUME ANALYSIS</span>
               <h3>Ready to see how your resume stacks up?</h3>
               <p>Upload your resume and add a job description. We'll calculate a skill match score and provide
-                personalized feedback to help you take the next step.</p><button class="primary-button" type="button"
-                data-open-modal>Start analyzing <span>→</span></button>
+                personalized feedback to help you take the next step.</p><a href="{{ url_for('analyzer') }}"
+                class="primary-button">
+                Start analyzing
+              </a>
             </div>
           </div>
           <div class="how-panel panel">
@@ -270,7 +272,7 @@
     </div>
   </div>
   <script src="{{ url_for('static', filename='script.js') }}" defer></script>
-  
+
 </body>
 
 </html>

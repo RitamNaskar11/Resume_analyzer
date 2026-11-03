@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Resume | Resumely</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='wizard.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <aside class="sidebar">
+            <a class="brand"><span class="brand-mark">✳</span><span>resumely</span></a>
+            <div class="workspace-label">WORKSPACE</div>
+
+            <div class="sidebar-menu">
+                <a href="{{ url_for('analyzer') }}" class="menu-item active">✧ &nbsp; Analyze resume
+                </a>
+                <a href="#" class="menu-item">◷ &nbsp; Analysis history</a>
+                <a href="#" class="menu-item">▤ &nbsp; Reports</a>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="upgrade-card">
+                    <div class="upgrade-spark">✦</div>
+                    <strong>Make your next move</strong>
+                    <p>Build a stronger resume with clear, actionable feedback.</p>
+                </div>
+                <div class="sidebar-foot">Made to help you move forward.</div>
+            </div>
+        </aside>
+
+        <main class="main-area">
+
+            <header class="topbar">
+                <div>
+                    <div class="eyebrow">WORKSPACE / RESUME TOOLS</div>
+                    <h1>Resume Analyzer</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <span class="status-pill"><i></i> AI analysis ready</span>
+                    <div class="avatar">
+                        {{ session.get('user_name', 'R')[0]|upper }}
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+                </div>
+            </header>
+
+            <section class="wizard-page">
+
+                <div class="wizard-heading">
+                    <p class="eyebrow purple">YOUR CAREER, CLEARER</p>
+                    <h2>Let's analyze your resume.</h2>
+                    <p>Follow these simple steps to get personalized resume insights.</p>
+                </div>
+
+                <div class="wizard-card">
+
+                    <div class="wizard-progress">
+                        <div class="progress-step active" data-step="1">
+                            <span>1</span><small>Upload Resume</small>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="2">
+                            <span>2</span><small>Add Job Description</small>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="3">
+                            <span>3</span><small>Analyze</small>
+                        </div>
+                        <div class="progress-line"></div>
+                        <div class="progress-step" data-step="4">
+                            <span>4</span><small>View Results</small>
+                        </div>
+                    </div>
+
+                    <form id="wizard-form" action="{{ url_for('analyze') }}" method="POST"
+                        enctype="multipart/form-data">
+
+                        <!-- STEP 1 -->
+                        <div class="wizard-step active" data-page="1">
+                            <h2>Upload your resume</h2>
+                            <p class="step-description">Choose your current PDF resume to get started.</p>
+
+                            <label class="wizard-upload" for="resume">
+                                <span class="upload-icon">↑</span>
+                                <strong>Drag your resume here</strong>
+                                <span>or choose a file from your computer</span>
+                                <span class="browse-button">Browse files</span>
+                                <small>PDF format · Maximum 5 MB</small>
+                                <input type="file" id="resume" name="resume" accept=".pdf,application/pdf" required>
+                            </label>
+
+                            <p id="file-name" class="selected-file"></p>
+
+                            <div class="wizard-actions right">
+                                <button type="button" class="primary-button next-btn">
+                                    Continue to job description →
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2 -->
+                        <div class="wizard-step" data-page="2">
+                            <h2>Add Job Description</h2>
+                            <p class="step-description">
+                                Paste the job description to get a better analysis.
+                            </p>
+
+                            <textarea id="job-description" name="job_description"
+                                placeholder="Paste the job description here..." maxlength="5000" required></textarea>
+
+                            <div class="character-count">
+                                <span id="char-count">0</span>/5000
+                            </div>
+
+                            <p class="sample-label">Or choose a sample job description:</p>
+
+                            <div class="sample-buttons">
+                                <button type="button"
+                                    data-sample="Frontend Developer skilled in HTML, CSS, JavaScript, React and responsive web design.">Frontend
+                                    Developer</button>
+                                <button type="button"
+                                    data-sample="Backend Developer skilled in Python, Flask, Django, REST APIs, SQL and PostgreSQL.">Backend
+                                    Developer</button>
+                                <button type="button"
+                                    data-sample="Data Scientist skilled in Python, Pandas, NumPy, SQL, statistics and machine learning.">Data
+                                    Scientist</button>
+                                <button type="button"
+                                    data-sample="Machine Learning Engineer skilled in Python, TensorFlow, PyTorch, machine learning and data processing.">ML
+                                    Engineer</button>
+                            </div>
+
+                            <div class="wizard-actions">
+                                <button type="button" class="back-btn">← Back</button>
+                                <button type="button" class="primary-button next-btn">Continue →</button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3 -->
+                        <div class="wizard-step" data-page="3">
+                            <h2>Ready to analyze?</h2>
+                            <p class="step-description">
+                                Review your uploaded resume and job description.
+                            </p>
+
+                            <div class="review-box">
+                                <h3>Resume</h3>
+                                <p id="review-file">No file selected</p>
+                            </div>
+
+                            <div class="review-box">
+                                <h3>Job Description</h3>
+                                <p id="review-job"></p>
+                            </div>
+
+                            <div class="wizard-actions">
+                                <button type="button" class="back-btn">← Back</button>
+                                <button type="submit" class="primary-button" id="analyze-btn">
+                                    Analyze Resume →
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="wizard-loading" id="wizard-loading">
+                        <div class="loader"></div>
+                        <h2>Analyzing your resume...</h2>
+                        <p>Please wait while we extract skills and prepare your report.</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer class="footer">
+                Resume Analyzer <span>•</span> Make every application count.
+            </footer>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='wizard.js') }}"></script>
+</body>
+
+</html>

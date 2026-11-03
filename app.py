@@ -126,6 +126,11 @@ def landing():
 @app.route("/analyzer")
 @login_required
 def analyzer():
+    return render_template("analyzer.html")
+
+@app.route("/results")
+@login_required
+def results():
     analysis = session.pop("analysis", None)
 
     if analysis:
@@ -189,7 +194,7 @@ def analyze():
     "ai_result": ai_result,
     "uploaded_filename": filename
     }
-    return redirect(url_for("analyzer"))
+    return redirect(url_for("results"))
 
 
 if __name__ == "__main__":
