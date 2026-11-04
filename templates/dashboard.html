@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Resumely</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="app-shell">
+
+        <aside class="sidebar">
+            <a class="brand" href="{{ url_for('dashboard') }}">
+                <span class="brand-mark">✳</span>
+                <span>resumely</span>
+            </a>
+
+            <div class="workspace-label">WORKSPACE</div>
+
+            <div class="sidebar-menu">
+                <a href="{{ url_for('dashboard') }}" class="menu-item active">
+                    <i data-lucide="scan-search"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{{ url_for('analyzer') }}" class="menu-item">
+                    <i data-lucide="scan-search"></i>
+                    <span>Analyze resume</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="history"></i>
+                    <span>Analysis history</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="file-chart-column"></i>
+                    <span>Reports</span>
+                </a>
+            </div>
+
+            <script>
+                lucide.createIcons();
+            </script>
+
+            <div class="sidebar-bottom">
+                <div class="upgrade-card">
+                    <div class="upgrade-spark">✦</div>
+                    <strong>Make your next move</strong>
+                    <p>Build a stronger resume with clear, actionable feedback.</p>
+                </div>
+                <div class="sidebar-foot">Made to help you move forward.</div>
+            </div>
+        </aside>
+
+        <main class="main-area">
+
+            <header class="topbar">
+                <div>
+                    <div class="eyebrow">WORKSPACE / RESUME TOOLS</div>
+                    <h1>Resume Analyzer</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <span class="status-pill"><i></i> AI analysis ready</span>
+                    <div class="avatar">
+                        {{ session.get('user_name', 'R')[0]|upper }}
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+                </div>
+            </header>
+
+            <section class="page-content">
+                <p class="eyebrow purple">YOUR CAREER, CLEARER</p>
+
+                <h2>Welcome, {{ user_name }}!</h2>
+
+                <p class="subheading">
+                    Analyze your resume and get personalized insights.
+                </p>
+
+                <div class="empty-dashboard">
+
+                    <div class="empty-main panel">
+                        <div class="empty-copy">
+                            <span class="pill purple-pill">
+                                SMART RESUME ANALYSIS
+                            </span>
+
+                            <h3>Ready to see how your resume stacks up?</h3>
+
+                            <p>
+                                Upload your resume and add a job description.
+                                Get your match score and personalized feedback.
+                            </p>
+
+                            <a href="{{ url_for('analyzer') }}" class="primary-button">
+                                Start Analyzing →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="how-panel panel">
+                        <div class="eyebrow">SIMPLE PROCESS</div>
+                        <h3>How it works</h3>
+
+                        <div class="step">
+                            <div class="step-number">01</div>
+                            <div>
+                                <strong>Upload your resume</strong>
+                                <p>Choose your current PDF resume.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">02</div>
+                            <div>
+                                <strong>Add a target job description</strong>
+                                <p>Paste the role you want to apply for.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">03</div>
+                            <div>
+                                <strong>Get your insights</strong>
+                                <p>Review your match score and skill gaps.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <footer class="footer">
+                Resumely &nbsp; • &nbsp; Make every application count.
+            </footer>
+
+        </main>
+    </div>
+</body>
+
+</html>

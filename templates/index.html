@@ -12,7 +12,7 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  
+
   <script src="https://unpkg.com/lucide@latest"></script>
 
 </head>
@@ -244,7 +244,7 @@
 
   <div class="modal-backdrop is-hidden" id="upload-modal">
     <div class="upload-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <button class="modal-close" type="button" id="modal-close" aria-label="Close upload dialog">×</button>
+      <button class="modal-close" type="button" id="modal-close" aria-label="Close upload dialog"></button>
       <div class="modal-symbol">✧</div>
       <p class="eyebrow purple">LET'S GET STARTED</p>
       <h2 id="modal-title">Upload your resume</h2>
@@ -259,7 +259,7 @@
         </label>
         <label class="field-label" for="job-description">Job description</label>
         <textarea id="job-description" name="job_description"
-          placeholder="Paste the job description for the role you’re applying to..." required></textarea>
+          placeholder="Paste the job description for the role you're applying to..." required></textarea>
         <div class="modal-error" id="form-error" role="alert"></div>
         <button class="primary-button modal-submit" type="submit" id="submit-button">Analyze resume
           <span>→</span></button>

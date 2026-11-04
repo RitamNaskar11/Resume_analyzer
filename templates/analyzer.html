@@ -25,12 +25,29 @@
             <a class="brand"><span class="brand-mark">✳</span><span>resumely</span></a>
             <div class="workspace-label">WORKSPACE</div>
 
+            <a href="{{ url_for('dashboard') }}" class="menu-item">
+                <i data-lucide="scan-search"></i>
+                </span>Dashboard</span>
+            </a>
+
             <div class="sidebar-menu">
-                <a href="{{ url_for('analyzer') }}" class="menu-item active">✧ &nbsp; Analyze resume
+                <a href="{{ url_for('analyzer') }}" class="menu-item active">
+                    <i data-lucide="scan-search"></i>
+                    <span>Analyze resume</span>
                 </a>
-                <a href="#" class="menu-item">◷ &nbsp; Analysis history</a>
-                <a href="#" class="menu-item">▤ &nbsp; Reports</a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="history"></i>
+                    <span>Analysis history</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="file-chart-column"></i>
+                    <span>Reports</span>
+                </a>
             </div>
+
+            <script>
+                lucide.createIcons();
+            </script>
 
             <div class="sidebar-bottom">
                 <div class="upgrade-card">
@@ -108,7 +125,7 @@
 
                             <div class="wizard-actions right">
                                 <button type="button" class="primary-button next-btn">
-                                    Continue to job description →
+                                    Continue to job description
                                 </button>
                             </div>
                         </div>
@@ -170,7 +187,7 @@
                             <div class="wizard-actions">
                                 <button type="button" class="back-btn">← Back</button>
                                 <button type="submit" class="primary-button" id="analyze-btn">
-                                    Analyze Resume →
+                                    Analyze Resume
                                 </button>
                             </div>
                         </div>
@@ -194,6 +211,7 @@
     </div>
 
     <script src="{{ url_for('static', filename='wizard.js') }}"></script>
+
 </body>
 
 </html>

@@ -103,7 +103,7 @@ def login():
             session.clear()
             session["user_id"] = user.id
             session["user_name"] = user.name
-            return redirect(url_for("analyzer"))
+            return redirect(url_for("dashboard"))
         
         flash("Invalid email or password", "error")
         return redirect(url_for("login"))
@@ -120,8 +120,15 @@ def logout():
 
 @app.route("/")
 def landing():
-    return render_template("landing.html")
+    if "user_id" in session:
+        return redirect(url_for("dashboard"))
 
+    return redirect(url_for("login"))
+
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    return render_template("dashboard.html", user_name=session.get("user_name"))
 
 @app.route("/analyzer")
 @login_required
@@ -131,22 +138,21 @@ def analyzer():
 @app.route("/results")
 @login_required
 def results():
-    analysis = session.pop("analysis", None)
+    analysis = session.get("analysis")
 
-    if analysis:
-        return render_template(
-            "index.html",
-            resume_skills=analysis["resume_skills"],
-            job_skills=analysis["job_skills"],
-            score=analysis["score"],
-            matched_skills=analysis["matched_skills"],
-            missing_skills=analysis["missing_skills"],
-            ai_result=analysis["ai_result"],
-            uploaded_filename=analysis["uploaded_filename"]
+    if not analysis:
+        return redirect(url_for("analyzer"))
 
-        )
-    return render_template("index.html")
-
+    return render_template(
+        "index.html",
+        resume_skills=analysis["resume_skills"],
+        job_skills=analysis["job_skills"],
+        score=analysis["score"],
+        matched_skills=analysis["matched_skills"],
+        missing_skills=analysis["missing_skills"],
+        ai_result=analysis["ai_result"],
+        uploaded_filename=analysis["uploaded_filename"]
+    )
 
 
 @app.route("/uploads/<filename>")
