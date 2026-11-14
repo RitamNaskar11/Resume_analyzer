@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis History</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='history.css') }}">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <aside class="sidebar" id="sidebar">
+            <a class="brand"><span class="brand-mark">✳</span><span>resumely</span></a>
+            <div class="workspace-label">WORKSPACE</div>
+
+            <div class="sidebar-menu">
+                <a href="{{ url_for('dashboard') }}" class="menu-item">
+                    <i data-lucide="scan-search"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="{{ url_for('analyzer') }}" class="menu-item">
+                    <i data-lucide="scan-search"></i>
+                    <span>Analyze resume</span>
+                </a>
+                <a href="{{url_for('history')}}" class="menu-item active">
+                    <i data-lucide="history"></i>
+                    <span>Analysis history</span>
+                </a>
+                <a href="{{ url_for('results') }}" class="menu-item">
+                    <i data-lucide="file-chart-column"></i>
+                    <span>Reports</span>
+                </a>
+            </div>
+
+            <script>
+                lucide.createIcons();
+            </script>
+
+            <div class="sidebar-bottom">
+                <div class="upgrade-card">
+                    <div class="upgrade-spark">✦</div>
+                    <strong>Make your next move</strong>
+                    <p>Build a stronger resume with clear, actionable feedback.</p>
+                </div>
+                <div class="sidebar-foot">Made to help you move forward.</div>
+            </div>
+        </aside>
+
+        <main class="main-area">
+
+            <header class="topbar">
+                <div>
+                    <div class="eyebrow">WORKSPACE / RESUME TOOLS</div>
+                    <h1>Analysis History</h1>
+                </div>
+
+                <div class="topbar-actions">
+                    <span class="status-pill"><i></i> AI analysis ready</span>
+                    <div class="avatar">
+                        {{ session.get('user_name', 'R')[0]|upper }}
+                    </div>
+                    <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+                </div>
+            </header>
+
+            <section class="history-content">
+
+                <div class="history-heading">
+                    <small>YOUR CAREER, CLEARER</small>
+                    <h1>Analysis History</h1>
+                    <p>Track your previous resume analysis and monitor your progress.</p>
+                </div>
+
+                <div class="history-card">
+
+                    <div class="history-top">
+                        <h2>Previous Analyses</h2>
+                        <span class="history-count">
+                            {{ records|length }} Analyses
+                        </span>
+                    </div>
+
+                    {% if records %}
+
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>RESUME FILE</th>
+                                <th>MATCH SCORE</th>
+                                <th>MATCHED SKILLS</th>
+                                <th>MISSING SKILLS</th>
+                                <th>DATE</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                <td class="file-name">📄 {{ record.filename }}</td>
+
+                                <td>
+                                    <span class="score">
+                                        {{ "%.1f"|format(record.score) }}%
+                                    </span>
+                                </td>
+
+                                <td class="skills">
+                                    {{ record.matched_skills|length }}
+                                </td>
+
+                                <td class="skills">
+                                    {{ record.missing_skills|length }}
+                                </td>
+
+                                <td>
+                                    {{ record.created_at.strftime('%d %b %Y') if record.created_at else 'N/A' }}
+                                </td>
+                            </tr>
+
+                            <td>
+                                <form action="{{ url_for('delete_analysis', record_id=record.id) }}" method="POST">
+
+                                    <button type="submit" class="delete-btn">
+                                        Delete
+                                    </button>
+
+                                </form>
+                            </td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% else %}
+
+                    <div class="empty-history">
+                        <div class="empty-icon">📊</div>
+                        <h3>No analysis history yet</h3>
+                        <p>Your completed resume analyses will appear here.</p>
+                        <a href="{{ url_for('analyzer') }}" class="analyze-btn">
+                            Start Analyzing →
+                        </a>
+                    </div>
+
+                    {% endif %}
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+</body>
+
+</html>

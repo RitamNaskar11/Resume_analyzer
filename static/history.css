@@ -1,0 +1,117 @@
+
+        .history-content {
+            padding: 35px 42px;
+            background: #f7f6fc;
+            min-height: 100vh;
+        }
+
+        .history-heading { margin-bottom: 28px; }
+        .history-heading small {
+            color: #743cff;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .history-heading h1 {
+            font-size: 32px;
+            margin: 12px 0;
+            color: #17152b;
+        }
+        .history-heading p { color: #77758d; }
+
+        .history-card {
+            background: white;
+            border: 1px solid #eceaf3;
+            border-radius: 18px;
+            padding: 25px;
+            overflow-x: auto;
+        }
+
+
+        .history-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .history-top h2 { font-size: 20px; color: #19172c; }
+
+        .history-count {
+            background: #f0eaff;
+            color: #713cff;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        .history-table th {
+            text-align: left;
+            padding: 16px 12px;
+            color: #9290a4;
+            font-size: 12px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #eeeaf5;
+        }
+
+        .history-table td {
+            padding: 19px 12px;
+            border-bottom: 1px solid #f0eef5;
+            color: #39364e;
+            font-size: 14px;
+        }
+
+        .file-name { font-weight: 600; color: #211e36; }
+
+        .score {
+            display: inline-block;
+            background: #eee8ff;
+            color: #713cff;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        .skills { color: #77758d; }
+
+        .empty-history {
+            text-align: center;
+            padding: 65px 20px;
+        }
+
+        .empty-history .empty-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .empty-history h3 {
+            color: #211e36;
+            margin-bottom: 10px;
+        }
+
+        .empty-history p {
+            color: #858298;
+            margin-bottom: 22px;
+        }
+
+        .analyze-btn {
+            display: inline-block;
+            background: linear-gradient(120deg, #793cff, #a16cf2);
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media(max-width: 768px) {
+            .history-content { padding: 25px 18px; }
+            .history-heading h1 { font-size: 25px; }
+            .history-card { padding: 16px; }
+        }

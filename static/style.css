@@ -1090,6 +1090,21 @@ a {
     animation: spin .8s linear infinite
 }
 
+.delete-btn {
+    background: #fff0f0;
+    color: #e53935;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.delete-btn:hover {
+    background: #e53935;
+    color: white;
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg)

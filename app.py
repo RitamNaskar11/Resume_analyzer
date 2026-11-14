@@ -11,7 +11,7 @@ from src.job_matcher import extract_job_skills
 from src.scoring import calculate_score
 from src.ai_analyzer import analyze_resume
 
-from models import db, User
+from models import db, User,AnalysisHistory
 import os
 
 from functools import wraps
@@ -130,6 +130,32 @@ def landing():
 def dashboard():
     return render_template("dashboard.html", user_name=session.get("user_name"))
 
+@app.route("/history")
+@login_required
+def history():
+    records = AnalysisHistory.query.filter_by(
+        user_id = session.get("user_id")
+    ).order_by(AnalysisHistory.created_at.desc()).all()
+
+    return render_template("history.html",records=records)
+
+@app.route("/delete_analysis/<int:record_id>", methods=["POST"])
+@login_required
+def delete_analysis(record_id):
+    # ... make sure to also update analysis_id to record_id inside this function ...
+
+
+    record=AnalysisHistory.query.filter_by(
+    id =record_id,
+    user_id = session.get("user_id")).first_or_404()
+
+    db.session.delete(record)
+    db.session.commit()
+
+    flash("Analysis record deleted successfully","success")
+    return redirect(url_for("history"))
+
+
 @app.route("/analyzer")
 @login_required
 def analyzer():
@@ -187,6 +213,17 @@ def analyze():
     # 7. Score calculate karo
     score, matched_skills, missing_skills = calculate_score(resume_skills, job_skills)
 
+    history_record = AnalysisHistory(
+        user_id=session.get("user_id"),
+        filename=filename,
+        score=score,
+        matched_skills=matched_skills,
+        missing_skills=missing_skills,
+
+    )
+    db.session.add(history_record)
+    db.session.commit()
+
     # 8. AI analysis
     ai_result = analyze_resume(
         resume_text, job_description, matched_skills, missing_skills
@@ -201,6 +238,7 @@ def analyze():
     "uploaded_filename": filename
     }
     return redirect(url_for("results"))
+
 
 
 if __name__ == "__main__":

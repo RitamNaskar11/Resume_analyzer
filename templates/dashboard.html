@@ -27,7 +27,7 @@
 
             <div class="workspace-label">WORKSPACE</div>
 
-            <div class="sidebar-menu">
+            <nav class="sidebar-menu">
                 <a href="{{ url_for('dashboard') }}" class="menu-item active">
                     <i data-lucide="scan-search"></i>
                     <span>Dashboard</span>
@@ -37,15 +37,15 @@
                     <i data-lucide="scan-search"></i>
                     <span>Analyze resume</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="{{url_for('history')}}" class="menu-item">
                     <i data-lucide="history"></i>
                     <span>Analysis history</span>
                 </a>
-                <a href="#" class="menu-item">
+                <a href="{{ url_for('results') }}" class="menu-item">
                     <i data-lucide="file-chart-column"></i>
                     <span>Reports</span>
                 </a>
-            </div>
+            </nav>
 
             <script>
                 lucide.createIcons();

@@ -23,25 +23,28 @@
       <a class="brand"><span class="brand-mark">✳</span><span>resumely</span></a>
       <div class="workspace-label">WORKSPACE</div>
 
-      <div class="sidebar-menu">
+      <nav class="sidebar-menu">
+        <a href="{{ url_for('dashboard') }}" class="menu-item">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
 
-
-        <a href="#" class="menu-item active">
+        <a href="{{ url_for('analyzer') }}" class="menu-item">
           <i data-lucide="scan-search"></i>
           <span>Analyze resume</span>
         </a>
 
-        <a href="#" class="menu-item">
+        <a href="{{ url_for('history') }}" class="menu-item">
           <i data-lucide="history"></i>
           <span>Analysis history</span>
         </a>
 
-        <a href="#" class="menu-item">
+        <a href="{{ url_for('results') }}" class="menu-item">
           <i data-lucide="file-chart-column"></i>
           <span>Reports</span>
         </a>
 
-      </div>
+      </nav>
       <script>
         lucide.createIcons();
       </script>
@@ -92,23 +95,23 @@
         {% if score is defined %}
         <div class="stats-grid">
           <article class="stat-card score-stat">
-            <div class="stat-top"><span>Resume match score</span><span class="stat-icon purple-icon">✧</span></div>
+            <div class="stat-top"><span>Resume match score</span></div>
             <div class="stat-value">{{ "%.1f"|format(score) }}<small>%</small></div>
             <div class="stat-caption">Overall skill alignment</div>
             <div class="mini-progress"><span style="width: {{ score }}%"></span></div>
           </article>
           <article class="stat-card">
-            <div class="stat-top"><span>Matched skills</span><span class="stat-icon green-icon">✓</span></div>
+            <div class="stat-top"><span>Matched skills</span></div>
             <div class="stat-value">{{ matched_skills|length }}</div>
             <div class="stat-caption">Skills found in your resume</div>
           </article>
           <article class="stat-card">
-            <div class="stat-top"><span>Missing skills</span><span class="stat-icon orange-icon">+</span></div>
+            <div class="stat-top"><span>Missing skills</span></div>
             <div class="stat-value">{{ missing_skills|length }}</div>
             <div class="stat-caption">Skills to consider developing</div>
           </article>
           <article class="stat-card">
-            <div class="stat-top"><span>Required skills</span><span class="stat-icon blue-icon">▤</span></div>
+            <div class="stat-top"><span>Required skills</span></div>
             <div class="stat-value">{{ job_skills|length }}</div>
             <div class="stat-caption">Skills identified in job post</div>
           </article>
