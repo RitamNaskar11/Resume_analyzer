@@ -13,13 +13,25 @@ the **Groq** API.
 
 ## Preview
 
-**Welcome screen**
+**Login / welcome screen**
 
-![AI Resume Analyzer — welcome screen](screenshots/website.png)
+![AI Resume Analyzer — login screen](screenshots/login.png)
+
+**Create an account**
+
+![AI Resume Analyzer — sign-up screen](screenshots/signup.png)
+
+**Dashboard**
+
+![AI Resume Analyzer — dashboard](screenshots/dashboard.png)
+
+**Analyze wizard — upload resume**
+
+![AI Resume Analyzer — analyze wizard](screenshots/analyzer.png)
 
 **Analysis results (match score, skill-gap analysis & AI feedback, with resume preview)**
 
-![AI Resume Analyzer — analysis results](screenshots/dashboard.png)
+![AI Resume Analyzer — analysis results](screenshots/results.png)
 
 ---
 
@@ -103,8 +115,11 @@ Resume_analyzer/
 │   ├── script.js              # Modal, upload validation + AI result formatting
 │   └── wizard.js              # Multi-step wizard logic
 ├── screenshots/
-│   ├── website.png            # Welcome screen screenshot (README)
-│   └── dashboard.png          # Analysis results screenshot (README)
+│   ├── login.png              # Login / welcome screen (README)
+│   ├── signup.png             # Sign-up screen (README)
+│   ├── dashboard.png          # Dashboard (README)
+│   ├── analyzer.png           # Analyze wizard (README)
+│   └── results.png            # Analysis results (README)
 └── uploads/                   # Uploaded resumes are stored here (git-ignored)
 ```
 
