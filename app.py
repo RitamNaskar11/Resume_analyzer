@@ -142,9 +142,6 @@ def history():
 @app.route("/delete_analysis/<int:record_id>", methods=["POST"])
 @login_required
 def delete_analysis(record_id):
-    # ... make sure to also update analysis_id to record_id inside this function ...
-
-
     record=AnalysisHistory.query.filter_by(
     id =record_id,
     user_id = session.get("user_id")).first_or_404()
