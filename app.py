@@ -194,7 +194,7 @@ def analyze():
     job_description = request.form["job_description"]
 
     filename = secure_filename(resume.filename)
-    pdf_path = os.path.join("uploads", filename)
+    pdf_path = os.path.join(UPLOAD_FOLDER, filename)
     resume.save(pdf_path)
 
     # 4. Resume se text extract karo
