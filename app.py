@@ -43,7 +43,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
-UPLOAD_FOLDER = "uploads"
+UPLOAD_FOLDER = "/tmp/uploads" if os.getenv("VERCEL")else"uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # signup page function
